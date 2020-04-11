@@ -3,10 +3,16 @@ package com.dims.finReportExport;
 import com.dims.finReportExport.converter.PdfConverter;
 import com.dims.finReportExport.converter.XlsConverter;
 import com.dims.finReportExport.model.FinRow;
+import com.mongodb.client.MongoClients;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+
 import java.util.List;
 
 //@SpringBootApplication
 public class FinReportExportApplication {
+
 
 	private static PdfConverter converter = new PdfConverter();
 
@@ -16,11 +22,28 @@ public class FinReportExportApplication {
 
 		List<FinRow> finRows = converter.extractFinRows("c:\\fin\\report.xls");
 
-		//TODO: save catergories to mongo
+		MongoOperations mongoOps = new MongoTemplate(MongoClients.create(), "fin");
+		if(mongoOps.count(new Query(), FinRow.class) == 0){
+			mongoOps.insertAll(finRows);
+		}
 		//TODO: category classification by mongo
+
+
+		Double totalMonthlyExpanseSum = 0D;
+
+		totalMonthlyExpanseSum = finRows.stream().map(FinRow::getChargeSum).reduce(Double::sum).get();
+
+
+		//TODO: connect to google drive API
+		//TODO: store the results to the right columns
+
 
 	}
 
+
+	public static void saveDataToGExcel(List<FinRow> finRows){
+
+	}
 
 
 

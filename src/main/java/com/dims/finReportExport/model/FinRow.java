@@ -5,7 +5,7 @@ import java.util.Date;
 public class FinRow {
 
 
-    private Long id;
+    private String id;
     private Date dealDate;
     private String businessName;
     private Double dealSum;
@@ -23,7 +23,7 @@ public class FinRow {
         this.info = info;
     }
 
-    public FinRow(Long id, Date dealDate, String businessName, Double dealSum, Double chargeSum, String originalCurrency, String info) {
+    public FinRow(String id, Date dealDate, String businessName, Double dealSum, Double chargeSum, String originalCurrency, String info) {
         this.id = id;
         this.dealDate = dealDate;
         this.businessName = businessName;
@@ -72,11 +72,11 @@ public class FinRow {
         this.info = info;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
